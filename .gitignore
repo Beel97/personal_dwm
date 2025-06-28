@@ -1,0 +1,14 @@
+*.o
+
+dwm
+
+*.swp
+
+*.tar.gz
+
+*~
+*.bak
+
+*.log
+
+.config.h.swp
