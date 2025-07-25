@@ -134,12 +134,17 @@ static const Layout layouts[] = { /* alt glyphs: 󱡗 󱏋 */
 /* commands */
 static const char *termcmd[]  = { "alacritty", NULL }; //my term change to your favorite terminal
 static const char *spfcmd[] = { "alacritty", "-e", "spf", NULL };
-
-
 //Volume control commands
 static const char *mutevol[] = { "sh", "-c", "amixer set Master toggle && pkill -RTMIN+10 dwmblocks", NULL };
 static const char *downvol[] = { "sh", "-c", "amixer set Master 5%- unmute && pkill -RTMIN+10 dwmblocks", NULL };
 static const char *upvol[]   = { "sh", "-c", "amixer set Master 5%+ unmute && pkill -RTMIN+10 dwmblocks", NULL };
+// Brillo
+static const char *upbright[]   = { "sh", "-c", "brightnessctl set +5% && pkill -RTMIN+11 dwmblocks", NULL };
+static const char *downbright[] = { "sh", "-c", "brightnessctl set 5%- && pkill -RTMIN+11 dwmblocks", NULL };
+//screenshots maim
+static const char *screenshot[] = { "sh", "-c", "maim -u -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png && notify-send 'Captura guardada'", NULL };
+static const char *screenshotfull[] = { "sh", "-c", "maim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png && notify-send 'Captura guardada'", NULL };
+
 
 
 static const Arg tagexec[] = { /* spawn application when tag is middle-clicked */
@@ -160,11 +165,15 @@ static const Key keys[] = {
   { 0, XF86XK_AudioMute,        spawn, {.v = mutevol } },
   { 0, XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
   { 0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol } },
+  { 0, XF86XK_MonBrightnessUp,   spawn, {.v = upbright } },
+  { 0, XF86XK_MonBrightnessDown, spawn, {.v = downbright } },
   { ControlMask|Mod1Mask,         XK_w,      togglebar,      {0} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} }, { MODKEY|ShiftMask,             XK_c,      quit,     {0} },
+	{ MODKEY,                       XK_Tab,    view,           {0} }, 
+  { MODKEY,                       XK_c,      spawn,         {.v = (const char*[]){"dwm_quick_nvim_open.sh",NULL} } },
+  { MODKEY|ShiftMask,             XK_c,      quit,     {0} },
 	{ MODKEY,                       XK_t,      spawn,      {.v = termcmd} },
 	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[1]} },
@@ -192,6 +201,7 @@ static const Key keys[] = {
   { MODKEY,                       XK_b,       spawn,        {.v =  (const char*[]){"dwm_browser_launcher.sh"}} },
   { MODKEY,                       XK_e,       spawn,        {.v = spfcmd} },
   { MODKEY|ShiftMask,             XK_w,       spawn,        {.v =  (const char*[]){"dwm_wallpaper.sh"}} },
+  { MODKEY|ShiftMask,             XK_m,       spawn,        {.v =  (const char*[]){"dwm_monitors.sh"}} },
   { MODKEY,                       XK_BackSpace,       spawn,        {.v =  (const char*[]){"dwm_logout_options.sh"}} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
@@ -234,19 +244,23 @@ static const Key keys[] = {
 
 
 /*// tag keys */
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
+	//TAGKEYS(                        XK_1,                      0)
+	//TAGKEYS(                        XK_2,                      1)
+	//TAGKEYS(                        XK_3,                      2)
+	//TAGKEYS(                        XK_4,                      3)
+	//TAGKEYS(                        XK_5,                      4)
+	//TAGKEYS(                        XK_6,                      5)
+	//TAGKEYS(                        XK_7,                      6)
+	//TAGKEYS(                        XK_8,                      7)
+	//TAGKEYS(                        XK_9,                      8)
 
 
 /*// toggle statusbar pieces individually */
   { MODKEY|ControlMask,			XK_w,      togglebarcolor, {0} }, /* swaps fg/bg for tag+win */
+
+  //screenshot
+  { MODKEY,                       XK_p,  spawn,          {.v = screenshot } }, /* screenshot active window */
+  { MODKEY|ShiftMask,             XK_p,  spawn,          {.v = screenshotfull } }, /* screenshot full screen */
 };
 
 
