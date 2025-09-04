@@ -142,8 +142,8 @@ static const char *upvol[]   = { "sh", "-c", "amixer set Master 5%+ unmute && pk
 static const char *upbright[]   = { "sh", "-c", "brightnessctl set +5% && pkill -RTMIN+11 dwmblocks", NULL };
 static const char *downbright[] = { "sh", "-c", "brightnessctl set 5%- && pkill -RTMIN+11 dwmblocks", NULL };
 //screenshots maim
-static const char *screenshot[] = { "sh", "-c", "maim -u -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png && notify-send 'Captura guardada'", NULL };
-static const char *screenshotfull[] = { "sh", "-c", "maim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png && notify-send 'Captura guardada'", NULL };
+static const char *screenshot[] = { "sh", "-c", "maim -u -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png && notify-send 'Captura copiada al portapapeles'", NULL };
+static const char *screenshotfull[] = { "sh", "-c", "maim | xclip -selection clipboard -t image/png && notify-send 'Captura copiada al portapapeles'", NULL };
 
 
 
