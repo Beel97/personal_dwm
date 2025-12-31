@@ -1014,6 +1014,7 @@ focus(Client *c)
 	} else {
 		XSetInputFocus(dpy, selmon->barwin, RevertToPointerRoot, CurrentTime);
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+  
 	}
 	if(selmon->sel && selmon->sel->isfullscreen){ /* if previous client was fullscreen, toggle off and then back for the new */
 		togglefullscreen(NULL);
@@ -1022,6 +1023,15 @@ focus(Client *c)
 	}else{
 		selmon->sel = c;
 	}
+  if (warp && c) {
+    int x, y;
+    Window dummy;
+
+    XTranslateCoordinates(dpy, c->win, root,
+                          0, 0, &x, &y, &dummy);
+    XWarpPointer(dpy, None, root, 0, 0, 0, 0,
+                 x + (c->w / 2), y + (c->h / 2));
+  }
 	drawbars(); /* redraw statusbar */
 }
 

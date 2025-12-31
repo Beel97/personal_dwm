@@ -23,7 +23,7 @@ dwm-xrdb-6.4.diff - xresource database colors
 */
 
 /* appearance */
-static unsigned int borderpx        = 2;        /* border pixel of windows */
+static unsigned int borderpx        = 4;        /* border pixel of windows */
 static unsigned int snap            = 32;       /* snap pixel */
 static const unsigned int gappih    = 5;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 5;       /* vert inner gap between windows */
@@ -38,6 +38,8 @@ static const int showlayout         = 1;        /* 0 means no layout indicator *
 static const int showstatus         = 1;        /* 0 means no status bar */
 static const int showfloating       = 0;        /* 0 means no floating indicator */
 static int topbar                   = 1;        /* 0 means bottom bar */
+
+static int warp = 1; /* 1 = mover cursor a ventana enfocada */
 
 static const char *fonts[]          = { "monospace:size=10","FiraCode Nerd Font:size=10", "Hack Nerd Font Mono:size=16", "NotoColorEmoji:pixelsize=14:antialias=true:autohint=true"  };
 
@@ -130,7 +132,6 @@ static const Layout layouts[] = { /* alt glyphs: 󱡗 󱏋 */
 
 #define STATUSBAR "dwmblocks"
 #define BROWSER "qutebrowser"
-
 /* commands */
 static const char *termcmd[]  = { "alacritty", NULL }; //my term change to your favorite terminal
 static const char *spfcmd[] = { "alacritty", "-e", "spf", NULL };
